@@ -14,7 +14,7 @@ def load_saved_artifacts():
     global __model
 
     base_path = os.path.dirname(__file__)
-    artifacts_path = os.path.abspath(os.path.join(base_path, "../artifacts"))
+    artifacts_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../artifacts'))
 
     with open(os.path.join(artifacts_path, "columns.json"), "r") as f:
         __data_columns = json.load(f)['data_columns']
