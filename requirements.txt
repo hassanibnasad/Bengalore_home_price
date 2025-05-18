@@ -1,0 +1,11 @@
+Flask
+numpy
+scikit-learn
+pandas
+joblib
+pickle
+json
+matplotlib
+util
+request
+jsonify
