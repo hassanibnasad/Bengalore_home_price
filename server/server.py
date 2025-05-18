@@ -1,15 +1,14 @@
 from flask import Flask, request, jsonify, render_template
-from . import util
+import util  # ✅ fixed import
 
 app = Flask(__name__)
 
-# ✅ Ensure this is called during deployment
+# ✅ Load model artifacts when app starts
 util.load_saved_artifacts()
 
 @app.route('/')
 def index():
     return render_template('index.html')
-  # Renders your web page
 
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
@@ -31,9 +30,5 @@ def predict_home_price():
 
         return jsonify({'estimated_price': estimated_price})
     except Exception as e:
+        print("Prediction error:", e)
         return jsonify({'error': str(e)})
-
-if __name__ == "__main__":
-    print("Starting Python Flask Server For Home Price Prediction...")
-    util.load_saved_artifacts()
-    app.run(host='0.0.0.0', port=5000)

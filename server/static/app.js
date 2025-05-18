@@ -1,6 +1,6 @@
 function getBathValue() {
   var uiBathrooms = document.getElementsByName("uiBathrooms");
-  for (var i in uiBathrooms) {
+  for (let i = 0; i < uiBathrooms.length; i++) {
     if (uiBathrooms[i].checked) {
       return parseInt(uiBathrooms[i].value);
     }
@@ -10,7 +10,7 @@ function getBathValue() {
 
 function getBHKValue() {
   var uiBHK = document.getElementsByName("uiBHK");
-  for (var i in uiBHK) {
+  for (let i = 0; i < uiBHK.length; i++) {
     if (uiBHK[i].checked) {
       return parseInt(uiBHK[i].value);
     }
@@ -26,7 +26,6 @@ function onClickedEstimatePrice() {
   var location = document.getElementById("uiLocations");
   var estPrice = document.getElementById("uiEstimatedPrice");
 
-  // ✅ Updated for unified Flask app on Render
   var url = "/predict_home_price";
 
   $.post(url, {
@@ -35,16 +34,18 @@ function onClickedEstimatePrice() {
     bath: bathrooms,
     location: location.value
   }, function (data, status) {
-    console.log(data.estimated_price);
-    estPrice.innerHTML = "<h2>" + data.estimated_price.toString() + " Lakh</h2>";
-    console.log(status);
+    console.log("Response:", data);
+    if (data.estimated_price !== undefined) {
+      estPrice.innerHTML = "<h2>" + data.estimated_price.toString() + " Lakh</h2>";
+    } else {
+      estPrice.innerHTML = "<h2 style='color:red;'>Error: Could not estimate price</h2>";
+    }
+    console.log("Status:", status);
   });
 }
 
 function onPageLoad() {
   console.log("document loaded");
-
-  // ✅ Updated for unified Flask app on Render
   var url = "/get_location_names";
 
   $.get(url, function (data, status) {
@@ -53,7 +54,7 @@ function onPageLoad() {
       var locations = data.locations;
       var uiLocations = document.getElementById("uiLocations");
       $('#uiLocations').empty();
-      for (var i in locations) {
+      for (let i = 0; i < locations.length; i++) {
         var opt = new Option(locations[i]);
         $('#uiLocations').append(opt);
       }
