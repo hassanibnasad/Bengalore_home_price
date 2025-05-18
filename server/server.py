@@ -3,9 +3,13 @@ from . import util
 
 app = Flask(__name__)
 
+# ✅ Ensure this is called during deployment
+util.load_saved_artifacts()
+
 @app.route('/')
 def index():
-    return render_template('index.html')  # Renders your web page
+    return render_template('index.html')
+  # Renders your web page
 
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
