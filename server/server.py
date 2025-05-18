@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-import util  # ✅ fixed import
+from . import util  # ✅ fixed import
 
 app = Flask(__name__)
 
