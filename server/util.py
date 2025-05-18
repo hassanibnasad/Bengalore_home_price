@@ -1,30 +1,26 @@
 import pickle
-import json
-import numpy as np
 import os
+import json
+import pickle
 
-__locations = None
-__data_columns = None
-__model = None
+artifacts_path = os.path.join(os.path.dirname(__file__), "artifacts")
 
 def load_saved_artifacts():
-    print("loading saved artifacts...start")
     global __data_columns
     global __locations
     global __model
 
-    base_path = os.path.dirname(__file__)
-    artifacts_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../artifacts'))
+    print("loading saved artifacts...start")
 
     with open(os.path.join(artifacts_path, "columns.json"), "r") as f:
         __data_columns = json.load(f)['data_columns']
         __locations = __data_columns[3:]
 
-    if __model is None:
-        with open(os.path.join(artifacts_path, "Bengalore_home_price_prediction_model.pickle"), "rb") as f:
-            __model = pickle.load(f)
+    with open(os.path.join(artifacts_path, "Bengalore_home_price_prediction_model.pickle"), "rb") as f:
+        __model = pickle.load(f)
 
     print("loading saved artifacts...done")
+
 
 def get_estimated_price(location, sqft, bhk, bath):
     try:
